@@ -23,26 +23,32 @@
       "name": "Kitchen",
       "desc": "",
       "desc_examine": "",
-      "right": "2"
+      "right": "2",
+      "is_able": true,
+      "is_shown": true
     },
     "4": {
       "name": "Garage",
       "desc": "",
       "desc_examine": "",
       "left": "2",
-      "in": "5"
+      "in": "5",
+      "is_able": true,
+      "is_shown": true
     },
     "5": {
       "name": "Basement",
       "desc": "",
       "desc_examine": "",
-      "out": "4"
+      "out": "4",
+      "is_able": true,
+      "is_shown": true
     }
   },
   "tasks": {
     "open_door": {
       "name": "Open door",
-      "desc": "You opened the door",
+      "desc": "The door is opened.",
       "desc_locked": "Door is locked! May need some key",
       "is_able": false,
       "is_shown": true,
