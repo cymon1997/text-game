@@ -1,7 +1,6 @@
 package engine
 
 import (
-	"fmt"
 	"github.com/cymon1997/text-game/engine/logger"
 	"github.com/cymon1997/text-game/engine/provider"
 	"github.com/cymon1997/text-game/entity"
@@ -22,5 +21,5 @@ func InputInt(prompt string) (input int, err error) {
 }
 
 func Clear() {
-	fmt.Print("\033[H\033[2J")
+	logger.Print("\033[H\033[2J")
 }

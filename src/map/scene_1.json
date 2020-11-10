@@ -3,16 +3,16 @@
     "1": {
       "name": "Front door",
       "desc": "This house seems creepy. Looks like it was abandoned long time ago.",
-      "action_desc": "Everything made by old woods. The floor is squeaky when you step in. There's a hole in ceiling.",
-      "move_desc": "It's too dark to see anything. The only thing you see is the creaky door in front of you.",
-      "actions": ["open_door", "unlock_door", "find_key", "check_dropped"],
+      "desc_examine": "Everything made by old woods. The floor is squeaky when you step in. There's a hole in ceiling.",
+      "desc_move": "It's too dark to see anything. The only thing you see is the creaky door in front of you.",
+      "tasks": ["open_door", "unlock_door", "find_key", "check_dropped"],
       "in": "2"
     },
     "2": {
       "name": "Living room",
       "desc": "",
       "desc_locked": "Seems like the door is locked.",
-      "action_desc": "",
+      "desc_examine": "",
       "left": "3",
       "right": "4",
       "out": "1",
@@ -22,64 +22,75 @@
     "3": {
       "name": "Kitchen",
       "desc": "",
-      "action_desc": "",
+      "desc_examine": "",
       "right": "2"
     },
     "4": {
       "name": "Garage",
       "desc": "",
-      "action_desc": "",
+      "desc_examine": "",
       "left": "2",
       "in": "5"
     },
     "5": {
       "name": "Basement",
       "desc": "",
-      "action_desc": "",
+      "desc_examine": "",
       "out": "4"
     }
   },
-  "actions": {
+  "tasks": {
     "open_door": {
       "name": "Open door",
       "desc": "You opened the door",
       "desc_locked": "Door is locked! May need some key",
       "is_able": false,
       "is_shown": true,
-      "enable_actions": [],
-      "disable_actions": [],
-      "show_actions": [],
-      "hide_actions": ["open_door"]
+      "task_action":  {
+        "enable": [],
+        "disable": [],
+        "show": [],
+        "hide": ["open_door"]
+      },
+      "room_action": {
+        "enable": ["2"]
+      }
     },
     "unlock_door" : {
       "name": "Unlock door",
       "desc": "You use the key to unlock the door. Door unlocked!",
       "is_able": true,
       "is_shown": false,
-      "enable_actions": ["open_door"],
-      "disable_actions": [],
-      "show_actions": [],
-      "hide_actions": ["unlock_door"]
+      "task_action": {
+        "enable": ["open_door"],
+        "disable": [],
+        "show": [],
+        "hide": ["unlock_door"]
+      }
     },
     "find_key": {
       "name": "Look at hole",
       "desc": "You can barely see, but not found anything. CRACK! Suddenly something dropped from above!",
       "is_able": true,
       "is_shown": true,
-      "enable_actions": [],
-      "disable_actions": [],
-      "show_actions": ["check_dropped"],
-      "hide_actions": ["find_key"]
+      "task_action": {
+        "enable": [],
+        "disable": [],
+        "show": ["check_dropped"],
+        "hide": ["find_key"]
+      }
     },
     "check_dropped": {
       "name": "Find out what it is",
       "desc": "You searching around and found a key!",
       "is_able": true,
       "is_shown": false,
-      "enable_actions": [],
-      "disable_actions": [],
-      "show_actions": ["unlock_door"],
-      "hide_actions": ["check_dropped"]
+      "task_action": {
+        "enable": [],
+        "disable": [],
+        "show": ["unlock_door"],
+        "hide": ["check_dropped"]
+      }
     }
   },
   "position": "1"

@@ -23,7 +23,7 @@ func Play(world *entity.World) {
 
 func WaitForInput(world *entity.World) bool {
 	var options []entity.Option
-	switch world.ActionMode {
+	switch world.Mode {
 	case entity.ModeExamine:
 		if modeChange {
 			logger.Println(world.Rooms[world.Position].ActionDesc)
@@ -43,6 +43,7 @@ func WaitForInput(world *entity.World) bool {
 	}
 	engine.PromptOptions(options)
 	input, err := engine.InputInt("Your action: ")
+	engine.Clear()
 	for err != nil || input < 1 || input > len(options) {
 		logger.Println("I don't understand what you mean...")
 		return true
@@ -52,15 +53,15 @@ func WaitForInput(world *entity.World) bool {
 
 func Execute(world *entity.World, key string) bool {
 	if key == "" {
-		world.ActionMode = ""
+		world.Mode = ""
 	}
-	switch world.ActionMode {
+	switch world.Mode {
 	case entity.ModeExamine:
 		Examine(world, key)
 	case entity.ModeMove:
 		MoveTo(world, key)
 	default:
-		world.ActionMode = key
+		world.Mode = key
 		modeChange = true
 	}
 	return true

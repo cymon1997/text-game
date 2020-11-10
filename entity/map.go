@@ -14,33 +14,38 @@ type Direction struct {
 type Description struct {
 	Desc       string `json:"desc"`
 	DescLocked string `json:"desc_locked"`
-	ActionDesc string `json:"action_desc"`
-	MoveDesc   string `json:"move_desc"`
+	ActionDesc string `json:"desc_examine"`
+	MoveDesc   string `json:"desc_move"`
 }
 
 type Action struct {
-	Name           string   `json:"name"`
-	IsAble         bool     `json:"is_able"`
-	IsShown        bool     `json:"is_shown"`
-	EnableActions  []string `json:"enable_actions"`
-	DisableActions []string `json:"disable_actions"`
-	ShowActions    []string `json:"show_actions"`
-	HideActions    []string `json:"hide_actions"`
+	Enable  []string `json:"enable"`
+	Disable []string `json:"disable"`
+	Show    []string `json:"show"`
+	Hide    []string `json:"hide"`
+}
+
+type Task struct {
+	Name       string `json:"name"`
+	IsAble     bool   `json:"is_able"`
+	IsShown    bool   `json:"is_shown"`
+	TaskAction Action `json:"task_action"`
+	RoomAction Action `json:"room_action"`
 	Description
 }
 
 type Room struct {
-	Name    string   `json:"name"`
-	Actions []string `json:"actions"`
-	IsAble  bool     `json:"is_able"`
-	IsShown bool     `json:"is_shown"`
+	Name           string   `json:"name"`
+	IsAble         bool     `json:"is_able"`
+	IsShown        bool     `json:"is_shown"`
+	AvailableTasks []string `json:"tasks"`
 	Description
 	Direction
 }
 
 type World struct {
-	Rooms      map[string]*Room   `json:"rooms"`
-	Actions    map[string]*Action `json:"actions"`
-	Position   string             `json:"position"`
-	ActionMode string
+	Rooms    map[string]*Room `json:"rooms"`
+	Tasks    map[string]*Task `json:"tasks"`
+	Position string           `json:"position"`
+	Mode     string
 }

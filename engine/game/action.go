@@ -22,8 +22,8 @@ func GenerateModeOptions(world *entity.World) []entity.Option {
 func GenerateExamineOptions(world *entity.World, loc string) []entity.Option {
 	options := make([]entity.Option, 0)
 	here := world.Rooms[loc]
-	for _, actionKey := range here.Actions {
-		if action := world.Actions[actionKey]; action.IsShown {
+	for _, actionKey := range here.AvailableTasks {
+		if action := world.Tasks[actionKey]; action.IsShown {
 			options = append(options, entity.Option{
 				Name:  action.Name,
 				Value: actionKey,
@@ -31,7 +31,7 @@ func GenerateExamineOptions(world *entity.World, loc string) []entity.Option {
 		}
 	}
 	options = append(options, entity.Option{
-		Name: "[Action list]",
+		Name: "[Task list]",
 	})
 	return options
 }
@@ -64,13 +64,13 @@ func GenerateMoveOptions(world *entity.World, loc string) []entity.Option {
 		})
 	}
 	options = append(options, entity.Option{
-		Name: "[Action list]",
+		Name: "[Task list]",
 	})
 	return options
 }
 
 func Examine(world *entity.World, actionKey string) {
-	action := world.Actions[actionKey]
+	action := world.Tasks[actionKey]
 	logger.Printf("You %s\n", action.Name)
 	if action.IsAble {
 		logger.Println(action.Desc)
@@ -90,17 +90,31 @@ func MoveTo(world *entity.World, loc string) {
 }
 
 func applyAction(world *entity.World, actionKey string) {
-	action := world.Actions[actionKey]
-	for _, nextKey := range action.EnableActions {
-		world.Actions[nextKey].IsAble = true
+	action := world.Tasks[actionKey]
+	// Apply task actions
+	for _, nextKey := range action.TaskAction.Enable {
+		world.Tasks[nextKey].IsAble = true
 	}
-	for _, nextKey := range action.DisableActions {
-		world.Actions[nextKey].IsAble = false
+	for _, nextKey := range action.TaskAction.Disable {
+		world.Tasks[nextKey].IsAble = false
 	}
-	for _, nextKey := range action.ShowActions {
-		world.Actions[nextKey].IsShown = true
+	for _, nextKey := range action.TaskAction.Show {
+		world.Tasks[nextKey].IsShown = true
 	}
-	for _, nextKey := range action.HideActions {
-		world.Actions[nextKey].IsShown = false
+	for _, nextKey := range action.TaskAction.Hide {
+		world.Tasks[nextKey].IsShown = false
+	}
+	// Apply room actions
+	for _, nextKey := range action.RoomAction.Enable {
+		world.Rooms[nextKey].IsAble = true
+	}
+	for _, nextKey := range action.RoomAction.Disable {
+		world.Rooms[nextKey].IsAble = false
+	}
+	for _, nextKey := range action.RoomAction.Show {
+		world.Rooms[nextKey].IsShown = true
+	}
+	for _, nextKey := range action.RoomAction.Hide {
+		world.Rooms[nextKey].IsShown = false
 	}
 }
