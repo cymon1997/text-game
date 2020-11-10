@@ -48,7 +48,7 @@
       "is_shown": true,
       "enable_actions": [],
       "disable_actions": [],
-      "show_actions": ["find_key"],
+      "show_actions": [],
       "hide_actions": ["open_door"]
     },
     "unlock_door" : {
