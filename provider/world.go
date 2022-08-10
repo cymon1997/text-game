@@ -2,9 +2,10 @@ package provider
 
 import (
 	"fmt"
-	engine "github.com/cymon1997/text-game/engine/world"
-	"github.com/cymon1997/text-game/entity"
 	"sync"
+
+	"github.com/cymon1997/text-game/core/entity"
+	engine "github.com/cymon1997/text-game/engine/world"
 )
 
 var (

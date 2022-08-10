@@ -2,8 +2,9 @@ package world
 
 import (
 	"encoding/json"
-	"github.com/cymon1997/text-game/entity"
 	"io/ioutil"
+
+	"github.com/cymon1997/text-game/core/entity"
 )
 
 func Render(path string) (*entity.World, error) {

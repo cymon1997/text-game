@@ -1,11 +1,12 @@
 package engine
 
 import (
-	"github.com/cymon1997/text-game/engine/logger"
-	"github.com/cymon1997/text-game/engine/provider"
-	"github.com/cymon1997/text-game/entity"
 	"strconv"
 	"strings"
+
+	"github.com/cymon1997/text-game/core/entity"
+	"github.com/cymon1997/text-game/engine/logger"
+	"github.com/cymon1997/text-game/provider"
 )
 
 func PromptOptions(opt []entity.Option) {

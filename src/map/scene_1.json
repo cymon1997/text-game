@@ -1,103 +1,134 @@
 {
   "rooms": {
-    "1": {
-      "name": "Front door",
-      "desc": "This house seems creepy. Looks like it was abandoned long time ago.",
-      "desc_examine": "Everything made by old woods. The floor is squeaky when you step in. There's a hole in ceiling.",
-      "desc_move": "It's too dark to see anything. The only thing you see is the creaky door in front of you.",
-      "tasks": ["open_door", "unlock_door", "find_key", "check_dropped"],
-      "in": "2"
-    },
-    "2": {
-      "name": "Living room",
-      "desc": "",
-      "desc_locked": "Seems like the door is locked.",
-      "desc_examine": "",
-      "left": "3",
-      "right": "4",
-      "out": "1",
-      "is_able": false,
-      "is_shown": true
-    },
-    "3": {
-      "name": "Kitchen",
-      "desc": "",
-      "desc_examine": "",
-      "right": "2",
-      "is_able": true,
-      "is_shown": true
-    },
-    "4": {
-      "name": "Garage",
-      "desc": "",
-      "desc_examine": "",
-      "left": "2",
-      "in": "5",
-      "is_able": true,
-      "is_shown": true
-    },
-    "5": {
-      "name": "Basement",
-      "desc": "",
-      "desc_examine": "",
-      "out": "4",
-      "is_able": true,
-      "is_shown": true
-    }
-  },
-  "tasks": {
-    "open_door": {
-      "name": "Open door",
-      "desc": "The door is opened.",
-      "desc_locked": "Door is locked! May need some key",
-      "is_able": false,
-      "is_shown": true,
-      "task_action":  {
-        "enable": [],
-        "disable": [],
-        "show": [],
-        "hide": ["open_door"]
+    "FRONT_DOOR": {
+      "name": "Front Door",
+      "descriptions": {
+        "general": "This house seems creepy. Looks like it was abandoned long time ago.",
+        "action": "Everything made by old woods. The floor is squeaky when you step in. There's a hole in ceiling.",
+        "movement": "It's too dark to see anything. The only thing you see is the creaky door in front of you."
       },
-      "room_action": {
-        "enable": ["2"]
+      "actions": ["OPEN_DOOR", "UNLOCK_LIVING_ROOM_DOOR", "LOOK_AT_HOLE", "CHECK_DROPPED"],
+      "movements": ["LIVING_ROOM"]
+    },
+    "LIVING_ROOM": {
+      "name": "Living Room",
+      "descriptions": {
+        "general": "Random",
+        "movement": "Some desc",
+        "locked": "Seems like the door is locked."
+      },
+      "status": {
+        "is_locked": true
+      },
+      "movements": ["KITCHEN", "GARAGE", "FRONT_DOOR"]
+    },
+    "KITCHEN": {
+      "name": "Kitchen",
+      "descriptions": {
+        "general": ""
+      },
+      "movements": ["LIVING_ROOM"]
+    },
+    "GARAGE": {
+      "name": "Garage",
+      "descriptions": {
+        "general": ""
+      },
+      "movements": ["LIVING_ROOM", "BASEMENT"]
+    },
+    "BASEMENT": {
+      "name": "Basement",
+      "descriptions": {
+        "general": ""
+      },
+      "movements": ["GARAGE"]
+    }
+  },
+  "actions": {
+    "OPEN_DOOR": {
+      "name": "Open door",
+      "descriptions": {
+        "general": "The door is opened.",
+        "locked": "Door is locked! May need a key..."
+      },
+      "status": {
+        "is_locked": true
+      },
+      "updates": {
+        "rooms": [
+          {
+            "key": "LIVING_ROOM",
+            "is_locked": false
+          }
+        ],
+        "actions": [
+          {
+            "key": "OPEN_DOOR",
+            "is_hidden": true
+          }
+        ]
       }
     },
-    "unlock_door" : {
+    "UNLOCK_LIVING_ROOM_DOOR" : {
       "name": "Unlock door",
-      "desc": "You use the key to unlock the door. Door unlocked!",
-      "is_able": true,
-      "is_shown": false,
-      "task_action": {
-        "enable": ["open_door"],
-        "disable": [],
-        "show": [],
-        "hide": ["unlock_door"]
+      "descriptions": {
+        "general": "You use the key to unlock the door. Door unlocked!"
+      },
+      "status": {
+        "is_hidden": true
+      },
+      "updates": {
+        "actions": [
+          {
+            "key": "OPEN_DOOR",
+            "is_locked": false
+          },
+          {
+            "key": "UNLOCK_LIVING_ROOM_DOOR",
+            "is_hidden": true
+          }
+        ]
       }
     },
-    "find_key": {
+    "LOOK_AT_HOLE": {
       "name": "Look at hole",
-      "desc": "You can barely see, but not found anything. CRACK! Suddenly something dropped from above!",
-      "is_able": true,
-      "is_shown": true,
-      "task_action": {
-        "enable": [],
-        "disable": [],
-        "show": ["check_dropped"],
-        "hide": ["find_key"]
+      "descriptions": {
+        "general": "You can barely see, but not found anything. CRACK! Suddenly something dropped from above!"
+      },
+      "updates": {
+        "actions": [
+          {
+            "key": "CHECK_DROPPED",
+            "is_hidden": false
+          },
+          {
+            "key": "LOOK_AT_HOLE",
+            "is_hidden": true
+          }
+        ]
       }
     },
-    "check_dropped": {
+    "CHECK_DROPPED": {
       "name": "Find out what it is",
-      "desc": "You searching around and found a key!",
-      "is_able": true,
-      "is_shown": false,
-      "task_action": {
-        "enable": [],
-        "disable": [],
-        "show": ["unlock_door"],
-        "hide": ["check_dropped"]
+      "descriptions": {
+        "general": "You searching around and found a key."
+      },
+      "status": {
+        "is_hidden": true
+      },
+      "updates": {
+        "actions": [
+          {
+            "key": "UNLOCK_LIVING_ROOM_DOOR",
+            "is_locked": false
+          },
+          {
+            "key": "CHECK_DROPPED",
+            "is_hidden": true
+          }
+        ]
       }
     }
   },
-  "position": "1"
+  "current_position": "FRONT_DOOR"
 }

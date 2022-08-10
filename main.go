@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/cymon1997/text-game/engine/game"
-	"github.com/cymon1997/text-game/engine/provider"
+	"github.com/cymon1997/text-game/provider"
 )
 
 func main() {
